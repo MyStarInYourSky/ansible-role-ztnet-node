@@ -1,0 +1,48 @@
+---
+- name: Include OS Specific mappings
+  include_vars:
+    file: osmap.yaml
+    name: osmap
+
+- name: Install ZeroTier (DEB)
+  include_tasks: install_deb.yml
+  when: ansible_facts['os_family'] == 'Debian'
+
+- name: Install ZeroTier (RPM)
+  include_tasks: install_rpm.yml
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Enable ZeroTier Service
+  systemd:
+    name: zerotier-one
+    state: started
+    enabled: yes
+
+- name: Wait for ZeroTier to generate identity
+  wait_for:
+    path: /var/lib/zerotier-one/identity.secret
+
+- name: Perform Local Config
+  include_tasks: local_config.yml
+
+- name: Setup ZeroTier Networks
+  ansible.builtin.file:
+    path: /var/lib/zerotier-one/networks.d/{{ network }}.conf
+    state: touch
+    mode: 0644
+    owner: zerotier-one
+    group: zerotier-one
+  loop: "{{ zerotier_networks.keys()|list }}"
+  notify:
+    - Restart ZeroTier
+
+- name: Setup ZeroTier Moon
+  template:
+    src: planet.j2
+    dest: /var/lib/zerotier-one/planet
+    owner: zerotier-one
+    group: zerotier-one
+    mode: 0644
+  when: zerotier_moon != ""
+  notify:
+    - Restart ZeroTier

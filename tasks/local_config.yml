@@ -1,0 +1,10 @@
+---
+- name: Build local config
+  template:
+    src: local.conf.j2
+    dest: /var/lib/zerotier-one/local.conf
+    owner: zerotier-one
+    group: zerotier-one
+    mode: 0644
+  notify:
+    - Restart ZeroTier
