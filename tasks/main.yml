@@ -43,6 +43,6 @@
     owner: zerotier-one
     group: zerotier-one
     mode: 0644
-  when: zerotier_moon != ""
+  when: zerotier_planet != ""
   notify:
     - Restart ZeroTier
