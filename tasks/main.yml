@@ -27,7 +27,7 @@
 
 - name: Setup ZeroTier Networks
   ansible.builtin.file:
-    path: /var/lib/zerotier-one/networks.d/{{ network }}.conf
+    path: /var/lib/zerotier-one/networks.d/{{ item }}.conf
     state: touch
     mode: 0644
     owner: zerotier-one
