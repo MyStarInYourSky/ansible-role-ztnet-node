@@ -12,9 +12,9 @@ description:
 options:
     node:
         description:
-            - Name of the current Node
+            - Node ID of the current Node
         type: str
-        required: true
+        required: true    
     network:
         description:
             - Name of the network where the Node will be configured
@@ -42,7 +42,8 @@ author:
 EXAMPLES = '''
 - name: Add host to ZeroTier Network
   ztnet_node_config:
-    node: zz12345
+    node_name: mynode
+    node_id: zz1234
     network: 1234
     api_key: 1234
     api_url: https://somesdn.mysite.com
@@ -88,7 +89,7 @@ class ZTNetNodeConfig(object):
 
     def __init__(self, module):
         self.module = module
-        self.nodename = module.params['node']
+        self.node = module.params['node']
         self.nwid = module.params['network']
         self.api_url = module.params['api_url']
         self.api_key = module.params['api_key']
@@ -128,7 +129,7 @@ class ZTNetNodeConfig(object):
         """
         Configures ZTNET Node
         """
-        api_url = f'{self.local_api_url}/network/{self.nwid}/member/{self.nodename}'
+        api_url = f'{self.local_api_url}/network/{self.nwid}/member/{self.node}'
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         config_json = json.dumps(self.target_config)
         try:
