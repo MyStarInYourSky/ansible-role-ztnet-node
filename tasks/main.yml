@@ -25,6 +25,16 @@
 - name: Perform Local Config
   include_tasks: local_config.yml
 
+- name: Setup ZeroTier Network Directory
+  ansible.builtin.file:
+    path: /var/lib/zerotier-one/networks.d/
+    state: directory
+    mode: '0755'
+    owner: zerotier-one
+    group: zerotier-one
+  notify:
+    - Restart ZeroTier
+
 - name: Setup ZeroTier Networks
   ansible.builtin.file:
     path: /var/lib/zerotier-one/networks.d/{{ item }}.conf
