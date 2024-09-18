@@ -56,3 +56,6 @@
   when: zerotier_planet != ""
   notify:
     - Restart ZeroTier
+
+- name: Configure ZTNET
+  include_tasks: configure_ztnet.yml
