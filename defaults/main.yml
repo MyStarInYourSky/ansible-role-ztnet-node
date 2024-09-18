@@ -6,3 +6,6 @@ zerotier_networks: {}
 zerotier_localconfig: {}
 zerotier_local_api_address: "localhost:9993"
 zerotier_planet: ""
+zerotier_ztnet_api_key: ""
+zerotier_ztnet_api_key ""
+zerogier_ztnet_api_url: ""
