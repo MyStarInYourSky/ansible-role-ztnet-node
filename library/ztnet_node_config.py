@@ -107,7 +107,7 @@ class ZTNetNodeConfig(object):
         Fixes rendering of json.dumps where booleans become capital.
         """
         fixed_config = {}
-        for config, config_val in self.raw_target_config.iter():
+        for config, config_val in self.raw_target_config.items():
             if isinstance(config_val, bool):
                 fixed_config[config]: repr(config_val) # type: ignore
             else:
