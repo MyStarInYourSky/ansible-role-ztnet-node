@@ -4,7 +4,7 @@
     node: "{{ lookup('ansible.builtin.file', '/var/lib/zerotier-one/identity.public') |  split(':') | first }}"
     network: "{{ item }}"
     api_key: "{{ zerotier_ztnet_api_key }}"
-    api_url: "{{ zerotier_ztnet_api_url }}/api/v1"
+    api_url: "{{ zerotier_ztnet_api_base_url }}/api/v1"
     config:
       authorized: true
       name: "{{ inventory_hostname }}"
