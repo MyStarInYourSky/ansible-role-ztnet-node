@@ -163,10 +163,10 @@ def main():
     zerotier_node = ZTNetNodeConfig(ansible_module)
 
     # Check to see if network exists
-    ZTNetNodeConfig.checkNetwork()
+    zerotier_node.checkNetwork()
 
     # Apply Changes
-    result=ZTNetNodeConfig.configureNode()
+    result=zerotier_node.configureNode()
 
     # Emit status
     if zerotier_node.result['changed']:
