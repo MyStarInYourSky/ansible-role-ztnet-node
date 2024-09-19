@@ -140,7 +140,7 @@ class ZTNetNodeConfig(object):
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
         except urllib.error.HTTPError as err:
-            if err.code == "308":
+            if err.code == 308:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
             else:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err)
