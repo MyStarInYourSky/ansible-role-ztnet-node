@@ -80,6 +80,7 @@ import psutil
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import open_url
+from requests.exceptions import HTTPError
 
 class ZTNetNodeConfig(object):
     """
@@ -138,8 +139,11 @@ class ZTNetNodeConfig(object):
             else:
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
-        except Exception as e:
-            self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}', reason=str(e))
+        except HTTPError as err:
+            if err.code == "308":
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
+            else:
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err)
 
 def main():
     ssh_defaults = dict(
