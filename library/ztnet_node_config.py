@@ -101,10 +101,14 @@ class ZTNetNodeConfig(object):
 
     def checkNetwork(self):
         """
-        Check if we have access to the target network
+        Check if Network Exists
         """
-        result = self.callAPI(api_url=f'{self.api_url}/network', method="GET")
-        return True
+        networks = self.callAPI(api_url=f'{self.api_url}/network', method="GET")
+        network_config = ([i for i in networks if i['id'] == self.nwid] or [None])[0]
+        if network_config == None:
+            self.module.fail_json(changed=False, msg=f'Unable to find network', reason="Cannot find network in list of networks we have access to")
+        else:
+            return True
         
     def configureNode(self):
         members = self.callAPI(api_url=f'{self.api_url}/network/{self.nwid}/member', method="GET")
