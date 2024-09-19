@@ -1,0 +1,7 @@
+---
+- name: Restart ZeroTier
+  ansible.builtin.systemd:
+    name: zerotier-one
+    state: restarted
+    enabled: true
+    daemon_reload: true
