@@ -128,7 +128,7 @@ class ZTNetNodeConfig(object):
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         config_json = json.dumps(self.target_config)
         try:
-            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json)
+            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json, follow_redirects=all)
             self.result['changed'] = True
             resp = json.loads(raw_resp.read())
             return resp
@@ -140,7 +140,7 @@ class ZTNetNodeConfig(object):
             elif err.code == 308:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}, {config_json}', reason="Please ensure the Network ID and Node ID are correct")
             else:
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err.msg)
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}, {config_json}', reason=err.msg)
 
 def main():
     ssh_defaults = dict(
