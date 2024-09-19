@@ -139,7 +139,7 @@ class ZTNetNodeConfig(object):
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
         except Exception as e:
-            self.module.fail_json(changed=False, msg="Unable to reach ZTNET API", reason=str(e))
+            self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}', reason=str(e))
 
 def main():
     ssh_defaults = dict(
