@@ -5,6 +5,8 @@
   register: node_identity
 
 - name: Configure ZTNet Central Node Settings
+  hosts: 127.0.0.1
+  connection: local
   ztnet_node_config:
     node: "{{ node_identity['content'] | b64decode | split(':') | first }}"
     network: "{{ item }}"
