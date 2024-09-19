@@ -42,7 +42,8 @@
     mode: 0644
     owner: zerotier-one
     group: zerotier-one
-    creates: /var/lib/zerotier-one/networks.d/{{ item }}.conf
+    access_time: preserve
+    modification_time: preserve
   loop: "{{ zerotier_networks.keys()|list }}"
   notify:
     - Restart ZeroTier
