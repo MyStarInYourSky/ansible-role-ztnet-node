@@ -127,7 +127,7 @@ class ZTNetNodeConfig(object):
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         config_json = json.dumps(self.target_config)
         try:
-            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json)
+            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json, follow_redirects="safe")
             if raw_resp.getcode() in [401, 429, 500]:
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=resp.error)
