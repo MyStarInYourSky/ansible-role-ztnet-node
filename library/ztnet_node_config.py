@@ -103,33 +103,26 @@ class ZTNetNodeConfig(object):
         """
         Check if we have access to the target network
         """
-        api_url = self.api_url + '/network'
-        api_auth = {'x-ztnet-auth': self.api_key, 'Accept': 'application/json'}
-        try:
-            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='GET', timeout=10)
-            if raw_resp.getcode() in [401, 429, 500]:
-                resp = json.loads(raw_resp.read())
-                self.module.fail_json(changed=False, msg=resp.error)
-            elif raw_resp.getcode() == 200 and any(network['nwid'] == self.nwid for network in json.loads(raw_resp.read())):
-                return True
-            elif raw_resp.getcode() == 200 and not any(network['nwid'] == self.nwid for network in json.loads(raw_resp.read())):
-                self.module.fail_json(changed=False, msg=f'Cannot find network {self.nwid}')
-            else:
-                resp = json.loads(raw_resp.read())
-                self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
-        except Exception as e:
-            self.module.fail_json(changed=False, msg="Unable to reach ZTNET API", reason=str(e))
-
+        result = self.callAPI(api_url=f'{self.api_url}/network', method="GET")
+        return True
+        
     def configureNode(self):
-        """
-        Configures ZTNET Node
-        """
-        api_url = f'{self.api_url}/network/{self.nwid}/member/{self.node}'
-        api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
-        config_json = json.dumps(self.target_config)
-        try:
-            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json, follow_redirects='all')
+        members = self.callAPI(api_url=f'{self.api_url}/network/{self.nwid}/member', method="GET")
+        node_config = ([i for i in members if i['nodeid'] == self.node] or [None])[0]
+        if node_config == None:
+            self.module.fail_json(changed=False, msg=f'Unable to find node', reason="Cannot find node in list of network members")
+        elif node_config != {**node_config, **self.target_config}:
+            node_send_config_result = self.callAPI(api_url=f'{self.api_url}/network/{self.nwid}/member/{self.node}', method="POST", data=json.dumps(self.target_config))
             self.result['changed'] = True
+            return node_send_config_result
+        elif node_config == {**node_config, **self.target_config}:
+            return node_config
+    
+    def callAPI(self, api_url, method, data=None):
+        api_url = f'{self.api_url}/network/{self.nwid}/member'
+        api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
+        try:
+            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method=method, timeout=10, data=data, follow_redirects='all')
             resp = json.loads(raw_resp.read())
             return resp
         except urllib.error.HTTPError as err:
@@ -138,9 +131,9 @@ class ZTNetNodeConfig(object):
             elif err.code == 429:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Too many Requests, slow down")
             elif err.code == 308:
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}, {config_json}', reason="Please ensure the Network ID and Node ID are correct")
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
             else:
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}, {config_json}', reason=err.msg)
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err.msg)  
 
 def main():
     ssh_defaults = dict(
