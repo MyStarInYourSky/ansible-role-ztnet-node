@@ -123,7 +123,7 @@ class ZTNetNodeConfig(object):
         """
         Configures ZTNET Node
         """
-        api_url = f'{self.local_api_url}/network/{self.nwid}/member/{self.node}'
+        api_url = f'{self.api_url}/network/{self.nwid}/member/{self.node}'
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         config_json = json.dumps(self.target_config)
         try:
