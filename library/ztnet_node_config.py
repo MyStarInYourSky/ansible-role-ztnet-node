@@ -108,7 +108,7 @@ class ZTNetNodeConfig(object):
         
     def configureNode(self):
         members = self.callAPI(api_url=f'{self.api_url}/network/{self.nwid}/member', method="GET")
-        node_config = ([i for i in members if i['nodeid'] == self.node] or [None])[0]
+        node_config = ([i for i in members if i['id'] == self.node] or [None])[0]
         if node_config == None:
             self.module.fail_json(changed=False, msg=f'Unable to find node', reason="Cannot find node in list of network members")
         elif node_config != {**node_config, **self.target_config}:
