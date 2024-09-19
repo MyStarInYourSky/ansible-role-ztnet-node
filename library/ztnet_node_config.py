@@ -80,7 +80,7 @@ import psutil
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule
 from ansible.module_utils.urls import open_url
-from requests.exceptions import HTTPError
+import urllib.error
 
 class ZTNetNodeConfig(object):
     """
@@ -128,7 +128,7 @@ class ZTNetNodeConfig(object):
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         config_json = json.dumps(self.target_config)
         try:
-            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json, follow_redirects="all")
+            raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json)
             if raw_resp.getcode() in [401, 429, 500]:
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=resp.error)
@@ -139,7 +139,7 @@ class ZTNetNodeConfig(object):
             else:
                 resp = json.loads(raw_resp.read())
                 self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
-        except HTTPError as err:
+        except urllib.error.HTTPError as err:
             if err.code == "308":
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
             else:
