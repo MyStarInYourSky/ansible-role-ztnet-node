@@ -99,6 +99,21 @@ class ZTNetNodeConfig(object):
         self.result = {}
         self.result['changed'] = False
 
+        # Fix Config
+        self.target_config = self.fixJsonBooleans()
+
+    def fixJsonBooleans(self):
+        """
+        Fixes rendering of json.dumps where booleans become capital.
+        """
+        fixed_config = {}
+        for config, config_val in self.target_config.iter():
+            if isinstance(config_val, bool):
+                fixed_config[config]: repr(config_val) # type: ignore
+            else:
+                fixed_config[config]: config_val # type: ignore
+        return fixed_config
+
     def checkNetwork(self):
         """
         Check if we have access to the target network
