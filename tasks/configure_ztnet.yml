@@ -11,5 +11,5 @@
     network: "{{ item }}"
     api_key: "{{ zerotier_ztnet_api_key }}"
     api_url: "{{ zerotier_ztnet_api_base_url }}/api/v1"
-    config: "{{ {'authorized': true} | ansible.builtin.combine(zerotier_networks[{{ item }}]) }}"
+    config: "{{ {'authorized':true} | ansible.builtin.combine(zerotier_networks[item]) }}"
   loop: "{{ zerotier_networks.keys()|list }}"
