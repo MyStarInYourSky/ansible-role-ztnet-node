@@ -119,7 +119,6 @@ class ZTNetNodeConfig(object):
             return node_config
     
     def callAPI(self, api_url, method, data=None):
-        api_url = f'{self.api_url}/network/{self.nwid}/member'
         api_auth = {'x-ztnet-auth': self.api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
         try:
             raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method=method, timeout=10, data=data, follow_redirects='all')
