@@ -93,7 +93,7 @@ class ZTNetNodeConfig(object):
         self.nwid = module.params['network']
         self.api_url = module.params['api_url']
         self.api_key = module.params['api_key']
-        self.target_config = module.params['config']
+        self.raw_target_config = module.params['config']
 
         # Set Defaults
         self.result = {}
@@ -107,7 +107,7 @@ class ZTNetNodeConfig(object):
         Fixes rendering of json.dumps where booleans become capital.
         """
         fixed_config = {}
-        for config, config_val in self.target_config.iter():
+        for config, config_val in self.raw_target_config.iter():
             if isinstance(config_val, bool):
                 fixed_config[config]: repr(config_val) # type: ignore
             else:
