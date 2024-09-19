@@ -54,7 +54,7 @@ If you need a custom planet, download it from ZTNET, and then set this config af
 
 The ZTNET Api Key
 
-### `zerogier_ztnet_api_base_url`
+### `zerotier_ztnet_api_base_url`
 
 The ZTNET installation URL, not including `/api/v1`
 
@@ -63,5 +63,8 @@ The ZTNET installation URL, not including `/api/v1`
 ```yaml
 zerotier_version: 1.10.6
 zerotier_networks:
-  12345: {}
+  12345:
+    authorized: true
+zerotier_ztnet_api_base_url: https://imgur.com
+zerotier_ztnet_api_key: mykey
 ```
