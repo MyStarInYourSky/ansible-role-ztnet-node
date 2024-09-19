@@ -42,8 +42,7 @@ author:
 EXAMPLES = '''
 - name: Add host to ZeroTier Network
   ztnet_node_config:
-    node_name: mynode
-    node_id: zz1234
+    node: zz1234
     network: 1234
     api_key: 1234
     api_url: https://somesdn.mysite.com
@@ -98,11 +97,6 @@ class ZTNetNodeConfig(object):
         # Set Defaults
         self.result = {}
         self.result['changed'] = False
-
-        # Get ZT Status
-        self.local_config = self.getZeroTierStatus()
-        self.nodeid = self.local_config['address']
-
 
     def checkNetwork(self):
         """
