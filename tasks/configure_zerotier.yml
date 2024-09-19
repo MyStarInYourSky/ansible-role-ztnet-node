@@ -1,0 +1,34 @@
+---
+- name: Setup ZeroTier Network Directory
+  ansible.builtin.file:
+    path: /var/lib/zerotier-one/networks.d/
+    state: directory
+    mode: '0755'
+    owner: zerotier-one
+    group: zerotier-one
+  notify:
+    - Restart ZeroTier
+
+- name: Setup ZeroTier Networks
+  ansible.builtin.file:
+    path: /var/lib/zerotier-one/networks.d/{{ item }}.conf
+    state: touch
+    mode: 0644
+    owner: zerotier-one
+    group: zerotier-one
+    access_time: preserve
+    modification_time: preserve
+  loop: "{{ zerotier_networks.keys()|list }}"
+  notify:
+    - Restart ZeroTier
+
+- name: Setup ZeroTier Planet
+  template:
+    src: planet.j2
+    dest: /var/lib/zerotier-one/planet
+    owner: zerotier-one
+    group: zerotier-one
+    mode: 0644
+  when: zerotier_planet != ""
+  notify:
+    - Restart ZeroTier
