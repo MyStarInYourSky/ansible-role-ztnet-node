@@ -138,7 +138,7 @@ class ZTNetNodeConfig(object):
             elif err.code == 429:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Too many Requests, slow down")
             elif err.code == 308:
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {api_url}', reason="Please ensure the Network ID and Node ID are correct")
             else:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err.msg)
 
