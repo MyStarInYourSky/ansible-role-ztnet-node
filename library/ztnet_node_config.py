@@ -136,8 +136,7 @@ class ZTNetNodeConfig(object):
             elif err.code == 308:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
             else:
-                err.fp.read()
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {data}', reason=err.msg)  
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API {data}', reason=err.fp.read())  
 
 def main():
     ssh_defaults = dict(
