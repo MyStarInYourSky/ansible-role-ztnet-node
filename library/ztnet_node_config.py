@@ -129,21 +129,18 @@ class ZTNetNodeConfig(object):
         config_json = json.dumps(self.target_config)
         try:
             raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method='POST', timeout=10, data=config_json)
-            if raw_resp.getcode() in [401, 429, 500]:
-                resp = json.loads(raw_resp.read())
-                self.module.fail_json(changed=False, msg=resp.error)
-            elif raw_resp.getcode() == 200:
-                self.result['changed'] = True
-                resp = json.loads(raw_resp.read())
-                return resp
-            else:
-                resp = json.loads(raw_resp.read())
-                self.module.fail_json(changed=False, msg=f'Unknown error: {resp}')
+            self.result['changed'] = True
+            resp = json.loads(raw_resp.read())
+            return resp
         except urllib.error.HTTPError as err:
-            if err.code == 308:
+            if err.code == 401:
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Unauthorized, check your API Key")
+            elif err.code == 429:
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Too many Requests, slow down")
+            elif err.code == 308:
                 self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason="Please ensure the Network ID and Node ID are correct")
             else:
-                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err)
+                self.module.fail_json(changed=False, msg=f'Unable to reach ZTNET API', reason=err.msg)
 
 def main():
     ssh_defaults = dict(
