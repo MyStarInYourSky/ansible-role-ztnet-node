@@ -93,7 +93,7 @@ class ZTNetNodeConfig(object):
         self.nwid = module.params['network']
         self.api_url = module.params['api_url']
         self.api_key = module.params['api_key']
-        self.raw_target_config = module.params['config']
+        self.target_config = module.params['config']
 
         # Set Defaults
         self.result = {}
