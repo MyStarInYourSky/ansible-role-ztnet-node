@@ -171,7 +171,7 @@ def main():
             node=dict(type='str', required=True),
             network=dict(type='str', required=True),
             api_key=dict(type='str', required=True),
-            config=dict(type='str', required=True),
+            config=dict(type='dict', required=True),
             api_url=dict(type='str', required=True),
         ),
         supports_check_mode=True,
