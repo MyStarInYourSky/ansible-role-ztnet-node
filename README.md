@@ -22,12 +22,13 @@ The ZeroTier version that will be installed
 
 ### `zerotier_networks`
 
-Configuration of ZeroTier networks that the node will join.
+Configuration of ZeroTier networks that the node will join. In the same dict, you can define node configuraitons such as `authorized: true`. Please see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
 
 It uses the following structure
 
 ```yaml
-{{zerotier network id}}: {}
+{{zerotier network id}}:
+  authorized: true
 ```
 
 ### `zerotier_localconfig`
