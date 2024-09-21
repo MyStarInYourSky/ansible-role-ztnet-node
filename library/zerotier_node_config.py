@@ -69,7 +69,9 @@ class ZeroTierNodeConfig(object):
         """
         Get ZeroTier Local Node API Key
         """
-        with open('/var/lib/zerotier-one/authtoken.secret') as f: api_key = f.read()
+        with open('/var/lib/zerotier-one/authtoken.secret') as f: 
+            api_key = f.read()
+
         return api_key
 
     def callAPI(self, api_url, method, error_mappings, data=None):
