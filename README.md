@@ -13,6 +13,9 @@ This ansible role provides configuration of the local node and ZTNET at the same
 - Ubuntu 18.04
 - Ubuntu 20.04
 - Ubuntu 22.04
+- Ubuntu 24.04
+- Debian 11 Bullseye
+- Debian 12 Bookworm
 
 ## Parameters
 
