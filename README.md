@@ -2,6 +2,8 @@
 
 This ansible role provides configuration of the local node and ZTNET at the same time.
 
+Still a WIP
+
 ## Implemented
 - Joining ZeroTier Clients to networks
 - Configuration of local ZeroTier Client settings
