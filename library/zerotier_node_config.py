@@ -130,7 +130,9 @@ class ZeroTierNodeConfig(object):
         # Check if there is a config change
         for network in networks_to_check:
             current_config = ([i for i in local_networks if i['id'] == network] or [None])[0]
+            print(current_config)
             target_config = self.network_config_bundle[network]['node_config']
+            print(target_config)
             if current_config != {**current_config, **target_config}:
                 networks_to_configure.append(network)
 
@@ -149,7 +151,7 @@ class ZeroTierNodeConfig(object):
         """
         network_config = self.network_config_bundle[network]['node_config']
         configure_network = self.callAPI(api_url=f'{self.local_api_url}/network/{network}', method="POST", data=json.dumps(network_config), error_mappings={401: "Access is unauthorized.", 404: "The server cannot find the requested resource."})
-        #self.result['changed'] = True
+        self.result['changed'] = True
 
 def main():
     ssh_defaults = dict(
