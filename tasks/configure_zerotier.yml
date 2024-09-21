@@ -1,26 +1,8 @@
 ---
-- name: Setup ZeroTier Network Directory
-  ansible.builtin.file:
-    path: /var/lib/zerotier-one/networks.d/
-    state: directory
-    mode: '0755'
-    owner: zerotier-one
-    group: zerotier-one
-  notify:
-    - Restart ZeroTier
-
-- name: Setup ZeroTier Networks
-  ansible.builtin.file:
-    path: /var/lib/zerotier-one/networks.d/{{ item }}.conf
-    state: touch
-    mode: 0644
-    owner: zerotier-one
-    group: zerotier-one
-    access_time: preserve
-    modification_time: preserve
-  loop: "{{ zerotier_networks.keys()|list }}"
-  notify:
-    - Restart ZeroTier
+- name: Configure Local ZeroTier Node
+  zerotier_node_config:
+    networks: "{{ zerotier_networks }}"
+    local_api_url: "http://localhost:9993"
 
 - name: Setup ZeroTier Planet
   template:

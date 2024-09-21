@@ -6,10 +6,10 @@
 
 - name: Configure ZTNet Central Node Settings
   delegate_to: 127.0.0.1
-  ztnet_node_config:
+  ztnet_controller_config:
     node: "{{ node_identity['content'] | b64decode | split(':') | first }}"
     network: "{{ item }}"
     api_key: "{{ zerotier_ztnet_api_key }}"
     api_url: "{{ zerotier_ztnet_api_base_url }}/api/v1"
-    config: "{{ {'authorized':true} | ansible.builtin.combine(zerotier_networks[item], recursive=true) }}"
+    config: "{{ {'authorized':true, 'name': inventory_hostname } | ansible.builtin.combine(zerotier_networks[item]['ztnet_config'] | default({}), recursive=true) }}"
   loop: "{{ zerotier_networks.keys()|list }}"

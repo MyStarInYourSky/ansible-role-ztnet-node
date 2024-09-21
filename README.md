@@ -2,6 +2,8 @@
 
 This ansible role provides configuration of the local node and ZTNET at the same time.
 
+Still a WIP
+
 ## Implemented
 - Joining ZeroTier Clients to networks
 - Configuration of local ZeroTier Client settings
@@ -13,6 +15,9 @@ This ansible role provides configuration of the local node and ZTNET at the same
 - Ubuntu 18.04
 - Ubuntu 20.04
 - Ubuntu 22.04
+- Ubuntu 24.04
+- Debian 11 Bullseye
+- Debian 12 Bookworm
 
 ## Parameters
 
@@ -22,13 +27,36 @@ The ZeroTier version that will be installed
 
 ### `zerotier_networks`
 
-Configuration of ZeroTier networks that the node will join. In the same dict, you can define node configuraitons such as `authorized: true`. Please see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
-
-It uses the following structure
+Configuration of ZeroTier networks that the node will join. It uses the following base structure.
 
 ```yaml
 {{zerotier network id}}:
-  authorized: true
+  node_config: {}
+  ztnet_config: {}
+```
+
+#### `node_config`
+
+This section allows you to perform local network specific configuration. See [here](https://docs.zerotier.com/config/#network-specific-configuration) for available options.
+
+Example Config:
+```yaml
+{{zerotier network id}}:
+  node_config:
+    allowManaged: 1
+  ztnet_config: {}
+```
+
+#### `ztnet_config`
+
+This section allows you to configure node settings on ZTNET. See [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. By default, the inventory hostname of the host is set as the name of the host, and the node is authorized. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
+
+Example Config:
+```yaml
+{{zerotier network id}}:
+  node_config: {}
+  ztnet_config:
+    authorized: true
 ```
 
 ### `zerotier_localconfig`
@@ -48,7 +76,9 @@ If you change the ZeroTier port via `zerotier_localconfig` or a similar option, 
 
 ### `zerotier_planet`
 
-If you need a custom planet, download it from ZTNET, and then set this config after encoding the planet with base64.
+If you need a custom planet, follow the instructions [here](https://ztnet.network/usage/private_root). After the setup, download the config and unpack it. Encode the file `planet.custom` with base64 and that will become the value of `zerotier_planet`
+
+For example: `cat planet.custom | base64`
 
 ### `zerotier_ztnet_api_key`
 
@@ -57,14 +87,3 @@ The ZTNET Api Key
 ### `zerotier_ztnet_api_base_url`
 
 The ZTNET installation URL, not including `/api/v1`
-
-## Example Deployment
-
-```yaml
-zerotier_version: 1.10.6
-zerotier_networks:
-  12345:
-    authorized: true
-zerotier_ztnet_api_base_url: https://imgur.com
-zerotier_ztnet_api_key: mykey
-```
