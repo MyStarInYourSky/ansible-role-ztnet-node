@@ -85,11 +85,3 @@ The ZTNET Api Key
 ### `zerotier_ztnet_api_base_url`
 
 The ZTNET installation URL, not including `/api/v1`
-
-## Example Deployment
-
-```yaml
-zerotier_version: 1.10.6
-zerotier_networks:
-  12345: {}
-```
