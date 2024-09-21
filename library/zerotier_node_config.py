@@ -180,7 +180,7 @@ def main():
 
     # Emit status
     if zerotier_node.result['changed']:
-        ansible_module.exit_json(changed=True, msg="")
+        ansible_module.exit_json(changed=True, msg=f'{networks_to_leave, networks_to_configure}')
     else:
         ansible_module.exit_json(changed=False, msg="ZTNet config unchanged")
 
