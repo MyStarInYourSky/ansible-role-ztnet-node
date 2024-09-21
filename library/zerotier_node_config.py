@@ -57,7 +57,6 @@ class ZeroTierNodeConfig(object):
         self.network_config_bundle = module.params['networks']
         self.local_api_url = module.params['local_api_url']
         self.waitForZeroTierNodeStatus()
-        self.local_api_key = self.getAPIKey()
 
         # Set Defaults
         self.result = {}
@@ -144,10 +143,11 @@ class ZeroTierNodeConfig(object):
         leave_network = self.callAPI(api_url=f'{self.local_api_url}/network/{network}', method="DELETE", error_mappings={401: "Access is unauthorized.", 404: "The server cannot find the requested resource."})
         self.result['changed'] = True
 
-    def configureNetwork(self, network, network_config):
+    def configureNetwork(self, network):
         """
         Join/Configure ZeroTier Network
         """
+        network_config = self.network_config_bundle[network]['node_config']
         configure_network = self.callAPI(api_url=f'{self.local_api_url}/network/{network}', method="POST", data=json.dumps(network_config), error_mappings={401: "Access is unauthorized.", 404: "The server cannot find the requested resource."})
         self.result['changed'] = True
 
