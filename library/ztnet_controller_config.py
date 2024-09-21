@@ -75,7 +75,6 @@ import shutil
 import json
 import time
 import os.path
-import psutil
 
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule

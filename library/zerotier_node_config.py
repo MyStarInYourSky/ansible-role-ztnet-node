@@ -29,7 +29,8 @@ EXAMPLES = '''
   zerotier_node_config:
     networks:
       12345:
-        allowManaged: 1
+        node_config:
+          allowManaged: 1
 '''
 
 import grp
@@ -38,8 +39,6 @@ import socket
 import shutil
 import json
 import time
-import os.path
-import psutil
 
 from ansible.module_utils._text import to_bytes
 from ansible.module_utils.basic import AnsibleModule
@@ -71,10 +70,12 @@ class ZeroTierNodeConfig(object):
                 zerotier_token = f.readlines()
         except Exception as e:
             self.module.fail_json(changed=False, msg="Unable to read auth token of currently running ZeroTier Node", reason=str(e))
-
         return zerotier_token[0]
 
     def callAPI(self, api_url, method, error_mappings, data=None):
+        """
+        API call wrapper
+        """
         api_auth = {'X-ZT1-Auth': self.getAPIKey(), 'Content-Type': 'application/json', 'Accept': 'application/json'}
         try:
             raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method=method, timeout=10, data=data, follow_redirects='all')
