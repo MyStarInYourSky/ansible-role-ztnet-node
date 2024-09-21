@@ -130,7 +130,7 @@ class ZeroTierNodeConfig(object):
         # Check if there is a config change
         for network in networks_to_check:
             current_config = ([i for i in local_networks if i['id'] == network] or [None])[0]
-            target_config = self.network_config_bundle[network]['node_config'] if self.network_config_bundle[network]['node_config'] is not None else {}
+            target_config = self.network_config_bundle[network]['node_config'] if 'node_config' in self.network_config_bundle[network].keys() else {}
             if current_config != {**current_config, **target_config}:
                 networks_to_configure.append(network)
 
