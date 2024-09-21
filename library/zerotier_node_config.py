@@ -56,14 +56,12 @@ class ZeroTierNodeConfig(object):
         self.module = module
         self.network_config_bundle = module.params['networks']
         self.local_api_url = module.params['local_api_url']
+        self.waitForZeroTierNodeStatus()
+        self.local_api_key = self.getAPIKey()
 
         # Set Defaults
         self.result = {}
         self.result['changed'] = False
-
-        # Get API Key
-        self.waitForZeroTierNodeStatus()
-        self.local_api_key = self.getAPIKey()
 
     def getAPIKey(self):
         """
@@ -78,7 +76,7 @@ class ZeroTierNodeConfig(object):
         return zerotier_token[0]
 
     def callAPI(self, api_url, method, error_mappings, data=None):
-        api_auth = {'X-ZT1-Auth': self.local_api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
+        api_auth = {'X-ZT1-Auth': self.getAPIKey(), 'Content-Type': 'application/json', 'Accept': 'application/json'}
         try:
             raw_resp = open_url(api_url, headers=api_auth, validate_certs=True, method=method, timeout=10, data=data, follow_redirects='all')
             resp = json.loads(raw_resp.read())
