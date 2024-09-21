@@ -149,7 +149,7 @@ class ZeroTierNodeConfig(object):
         """
         network_config = self.network_config_bundle[network]['node_config']
         configure_network = self.callAPI(api_url=f'{self.local_api_url}/network/{network}', method="POST", data=json.dumps(network_config), error_mappings={401: "Access is unauthorized.", 404: "The server cannot find the requested resource."})
-        self.result['changed'] = True
+        #self.result['changed'] = True
 
 def main():
     ssh_defaults = dict(
