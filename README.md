@@ -30,7 +30,7 @@ Configuration of ZeroTier networks that the node will join. It uses the followin
   ztnet_config: {}
 ```
 
-### `node_config`
+#### `node_config`
 
 This section allows you to perform local network specific configuration. See [here](https://docs.zerotier.com/config/#network-specific-configuration) for available options.
 
@@ -42,7 +42,7 @@ Example Config:
   ztnet_config: {}
 ```
 
-### `ztnet_config`
+#### `ztnet_config`
 
 This section allows you to configure node settings on ZTNET. See [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. By default, the inventory hostname of the host is set as the name of the host, and the node is authorized. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
 
