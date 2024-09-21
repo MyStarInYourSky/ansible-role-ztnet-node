@@ -82,7 +82,7 @@ For example: `cat planet.custom | base64`
 
 The ZTNET Api Key
 
-### `zerogier_ztnet_api_base_url`
+### `zerotier_ztnet_api_base_url`
 
 The ZTNET installation URL, not including `/api/v1`
 
