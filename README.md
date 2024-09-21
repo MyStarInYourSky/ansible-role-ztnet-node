@@ -30,9 +30,29 @@ Configuration of ZeroTier networks that the node will join. It uses the followin
   ztnet_config: {}
 ```
 
-For the options that can be entered into `node_config` see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member). 
+### `node_config`
 
-For the options that can be entered into `ztnet_config` see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. By default, the inventory hostname of the host is set as the name of the host, and the node is authorized. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
+This section allows you to perform local network specific configuration. See [here](https://docs.zerotier.com/config/#network-specific-configuration) for available options.
+
+Example Config:
+```yaml
+{{zerotier network id}}:
+  node_config:
+    allowManaged: 1
+  ztnet_config: {}
+```
+
+### `ztnet_config`
+
+This section allows you to configure node settings on ZTNET. See [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. By default, the inventory hostname of the host is set as the name of the host, and the node is authorized. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
+
+Example Config:
+```yaml
+{{zerotier network id}}:
+  node_config: {}
+  ztnet_config:
+    authorized: true
+```
 
 ### `zerotier_localconfig`
 
