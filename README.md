@@ -22,9 +22,7 @@ The ZeroTier version that will be installed
 
 ### `zerotier_networks`
 
-Configuration of ZeroTier networks that the node will join. In the same dict, you can define node configuraitons such as `authorized: true`. Please see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
-
-It uses the following base structure
+Configuration of ZeroTier networks that the node will join. It uses the following base structure.
 
 ```yaml
 {{zerotier network id}}:
@@ -32,7 +30,9 @@ It uses the following base structure
   ztnet_config: {}
 ```
 
-For the options that can be entered into `node_config` see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member). By default, 
+For the options that can be entered into `node_config` see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member). 
+
+For the options that can be entered into `ztnet_config` see [here](https://ztnet.network/Rest%20Api/Personal/Network-Members/modify-a-network-member) for all possible options. By default, the inventory hostname of the host is set as the name of the host, and the node is authorized. Some (like tags) may not be functional yet and will return an error such as `{"fieldErrors": {"": ["Unrecognized key(s) in object: 'tags'"]}, "message": "Validation error"}}`
 
 ### `zerotier_localconfig`
 
