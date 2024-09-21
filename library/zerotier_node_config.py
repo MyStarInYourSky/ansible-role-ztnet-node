@@ -69,10 +69,13 @@ class ZeroTierNodeConfig(object):
         """
         Get ZeroTier Local Node API Key
         """
-        with open('/var/lib/zerotier-one/authtoken.secret') as f: 
-            api_key = f.read()
+        try:
+            with open('/var/lib/zerotier-one/authtoken.secret') as f:
+                zerotier_token = f.readlines()
+        except Exception as e:
+            self.module.fail_json(changed=False, msg="Unable to read auth token of currently running ZeroTier Node", reason=str(e))
 
-        return api_key
+        return zerotier_token[0]
 
     def callAPI(self, api_url, method, error_mappings, data=None):
         api_auth = {'X-ZT1-Auth': self.local_api_key, 'Content-Type': 'application/json', 'Accept': 'application/json'}
