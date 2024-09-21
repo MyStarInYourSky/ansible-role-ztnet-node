@@ -130,7 +130,7 @@ class ZeroTierNodeConfig(object):
         # Check if there is a config change
         for network in networks_to_check:
             current_config = ([i for i in local_networks if i['id'] == network] or [None])[0]
-            target_config = self.network_config_bundle[network]
+            target_config = self.network_config_bundle[network]['node_config']
             if current_config != {**current_config, **target_config}:
                 networks_to_configure.append(network)
 
@@ -180,7 +180,7 @@ def main():
 
     # Emit status
     if zerotier_node.result['changed']:
-        ansible_module.exit_json(changed=True, msg=f'{networks_to_leave, networks_to_configure}')
+        ansible_module.exit_json(changed=True, msg="")
     else:
         ansible_module.exit_json(changed=False, msg="ZTNet config unchanged")
 
