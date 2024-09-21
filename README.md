@@ -71,7 +71,9 @@ If you change the ZeroTier port via `zerotier_localconfig` or a similar option, 
 
 ### `zerotier_planet`
 
-If you need a custom planet, download it from ZTNET, and then set this config after encoding the planet with base64.
+If you need a custom planet, follow the instructions [here](https://ztnet.network/usage/private_root). After the setup, download the config and unpack it. Encode the file `planet.custom` with base64 and that will become the value of `zerotier_planet`
+
+For example: `cat planet.custom | base64`
 
 ### `zerotier_ztnet_api_key`
 
