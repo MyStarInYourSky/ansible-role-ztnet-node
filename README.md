@@ -1,6 +1,8 @@
 # Ansible role for using ZeroTier Clients with ZTNET
 
-This ansible role provides configuration of the local node and ZTNET at the same time.
+This ansible role provides configuration of the local node (ZeroTier Client/Node) and [ZTNET](https://ztnet.network) at the same time.
+
+Still a WIP
 
 Still a WIP
 
