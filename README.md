@@ -4,8 +4,6 @@ This ansible role provides configuration of the local node (ZeroTier Client/Node
 
 Still a WIP
 
-Still a WIP
-
 ## Implemented
 - Joining ZeroTier Clients to networks
 - Configuration of local ZeroTier Client settings
