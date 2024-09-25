@@ -28,5 +28,8 @@
 - name: Configure ZeroTier
   include_tasks: configure_zerotier.yml
 
+- name: Flush handlers
+  meta: flush_handlers
+
 - name: Configure ZTNET
   include_tasks: configure_ztnet.yml
