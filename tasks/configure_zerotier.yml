@@ -7,10 +7,26 @@
 - name: Setup ZeroTier Planet
   template:
     src: planet.j2
-    dest: /var/lib/zerotier-one/planet
+    dest: /var/lib/zerotier-one/planet.custom
     owner: zerotier-one
     group: zerotier-one
     mode: 0644
   when: zerotier_planet != ""
   notify:
     - Restart ZeroTier
+
+- name: Setup ZeroTier Service Override folder
+  ansible.builtin.file:
+    path: /etc/systemd/system/zerotier-one.service.d/
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Setup ZeroTier Service Override
+  ansible.builtin.copy:
+    src: systemd-override.conf
+    dest: /etc/systemd/system/zerotier-one.service.d/ansible.conf
+    owner: root
+    group: root
+    mode: '0644'
