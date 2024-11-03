@@ -22,3 +22,8 @@
     allow_downgrade: yes
   notify:
     - Restart ZeroTier
+
+- name: Enable ZeroTier Service
+  systemd:
+    name: zerotier-one
+    enabled: yes
