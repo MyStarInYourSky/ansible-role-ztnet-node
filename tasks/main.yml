@@ -12,12 +12,6 @@
   include_tasks: install_rpm.yml
   when: ansible_facts['os_family'] == "RedHat"
 
-- name: Enable ZeroTier Service
-  systemd:
-    name: zerotier-one
-    state: started
-    enabled: yes
-
 - name: Wait for ZeroTier to generate identity
   wait_for:
     path: /var/lib/zerotier-one/identity.secret
