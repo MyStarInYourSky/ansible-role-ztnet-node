@@ -15,6 +15,16 @@
   notify:
     - Restart ZeroTier
 
+- name: Build ZeroTier local config
+  template:
+    src: local.conf.j2
+    dest: /var/lib/zerotier-one/local.conf
+    owner: zerotier-one
+    group: zerotier-one
+    mode: 0644
+  notify:
+    - Restart ZeroTier
+
 - name: Setup ZeroTier Service Override folder
   ansible.builtin.file:
     path: /etc/systemd/system/zerotier-one.service.d/
