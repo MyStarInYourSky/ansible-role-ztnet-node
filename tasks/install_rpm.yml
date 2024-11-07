@@ -28,3 +28,4 @@
   systemd:
     name: zerotier-one
     enabled: yes
+    state: started

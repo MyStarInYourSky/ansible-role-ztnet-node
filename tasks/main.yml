@@ -16,14 +16,15 @@
   wait_for:
     path: /var/lib/zerotier-one/identity.secret
 
-- name: Perform Local Config
-  include_tasks: local_config.yml
-
 - name: Configure ZeroTier
   include_tasks: configure_zerotier.yml
 
 - name: Flush handlers
   meta: flush_handlers
+
+- name: Wait for registration with ZTNET
+  ansible.builtin.pause:
+    minutes: 1
 
 - name: Configure ZTNET
   include_tasks: configure_ztnet.yml
