@@ -21,8 +21,6 @@
   yum:
     name: zerotier-one-{{zerotier_version}}
     state: present
-  notify:
-    - Restart ZeroTier
 
 - name: Make sure ZeroTier is enabled
   systemd:
