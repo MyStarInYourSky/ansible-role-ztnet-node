@@ -24,8 +24,7 @@
   notify:
     - Restart ZeroTier
 
-- name: Enable ZeroTier Service
+- name: Make sure ZeroTier is enabled
   systemd:
     name: zerotier-one
     enabled: yes
-    state: started
