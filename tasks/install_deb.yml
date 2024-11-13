@@ -1,27 +1,28 @@
 ---
 - name: Install Prerequisite Packages
-  apt:
+  ansible.builtin.apt:
     update_cache: yes
     state: present
     pkg: "{{osmap[ansible_facts['distribution']][ansible_distribution_release]['packages']}}"
 
 - name: Add ZeroTier GPG Key
-  apt_key:
+  ansible.builtin.apt_key:
     url: "{{zerotier_repo['gpg']}}"
     state: present
 
 - name: Add ZeroTier Repo
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: "{{osmap[ansible_facts['distribution']][ansible_distribution_release]['zerotier_repo']}}"
 
 - name: Install ZeroTier
-  apt:
+  ansible.builtin.apt:
     name: zerotier-one={{zerotier_version}}
     state: present
     update_cache: yes
     allow_downgrade: yes
 
 - name: Make sure ZeroTier is enabled
-  systemd:
+  ansible.builtin.systemd_service:
     name: zerotier-one
     enabled: yes
+    state: started

@@ -5,7 +5,7 @@
     local_api_url: "http://localhost:9993"
 
 - name: Setup ZeroTier Planet
-  template:
+  ansible.builtin.template:
     src: planet.j2
     dest: /var/lib/zerotier-one/planet.custom
     owner: zerotier-one
@@ -17,7 +17,7 @@
     - Start ZeroTier
 
 - name: Build ZeroTier local config
-  template:
+  ansible.builtin.template:
     src: local.conf.j2
     dest: /var/lib/zerotier-one/local.conf
     owner: zerotier-one

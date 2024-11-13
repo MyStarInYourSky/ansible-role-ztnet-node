@@ -1,16 +1,16 @@
 ---
 - name: Install Prerequisite Packages
-  yum:
+  ansible.builtin.yum:
     state: present
     pkg: "{{osmap[ansible_facts['distribution']][ansible_distribution_major_version]['packages']}}"
 
 - name: Add ZeroTier GPG Key
-  rpm_key:
+  ansible.builtin.rpm_key:
     key: "{{zerotier_repo['gpg']}}"
     state: present
 
 - name: Add ZeroTier Repo
-  yum_repository:
+  ansible.builtin.yum_repository:
     name: zerotier
     description: ZeroTier YUM repo
     baseurl: "{{osmap[ansible_facts['distribution']][ansible_distribution_major_version]['zerotier_repo']}}"
@@ -18,11 +18,12 @@
     gpgcheck: yes
 
 - name: Install ZeroTier
-  yum:
+  ansible.builtin.yum:
     name: zerotier-one-{{zerotier_version}}
     state: present
 
 - name: Make sure ZeroTier is enabled
-  systemd:
+  ansible.builtin.systemd_service:
     name: zerotier-one
     enabled: yes
+    state: started
