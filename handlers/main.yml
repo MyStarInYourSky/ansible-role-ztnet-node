@@ -1,7 +1,14 @@
 ---
-- name: Restart ZeroTier
+- name: Stop ZeroTier
   ansible.builtin.systemd:
     name: zerotier-one
-    state: restarted
+    state: stopped
+    enabled: true
+    daemon_reload: true
+
+- name: Start ZeroTier
+  ansible.builtin.systemd:
+    name: zerotier-one
+    state: started
     enabled: true
     daemon_reload: true

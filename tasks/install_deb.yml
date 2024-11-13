@@ -20,11 +20,8 @@
     state: present
     update_cache: yes
     allow_downgrade: yes
-  notify:
-    - Restart ZeroTier
 
-- name: Make sure ZeroTier is started
+- name: Make sure ZeroTier is enabled
   systemd:
     name: zerotier-one
     enabled: yes
-    state: started
