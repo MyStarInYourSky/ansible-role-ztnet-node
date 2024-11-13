@@ -13,7 +13,8 @@
     mode: 0644
   when: zerotier_planet != ""
   notify:
-    - Restart ZeroTier
+    - Stop ZeroTier
+    - Start ZeroTier
 
 - name: Build ZeroTier local config
   template:
@@ -23,7 +24,8 @@
     group: zerotier-one
     mode: 0644
   notify:
-    - Restart ZeroTier
+    - Stop ZeroTier
+    - Start ZeroTier
 
 - name: Setup ZeroTier Service Override folder
   ansible.builtin.file:
