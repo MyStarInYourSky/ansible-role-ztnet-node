@@ -34,9 +34,11 @@
     group: root
 
 - name: Setup ZeroTier Service Override
-  ansible.builtin.copy:
-    src: systemd-override.conf
+  ansible.builtin.template:
+    src: systemd-override.conf.j2
     dest: /etc/systemd/system/zerotier-one.service.d/ansible.conf
     owner: root
     group: root
-    mode: '0644'
+    mode: 0644
+  notify:
+    - Restart ZeroTier
