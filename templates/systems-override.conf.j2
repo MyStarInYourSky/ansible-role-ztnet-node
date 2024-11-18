@@ -1,3 +1,3 @@
 [Service]
 ExecStartPre=/bin/sh -c '[ -f /var/lib/zerotier-one/planet.custom ] && cp /var/lib/zerotier-one/planet.custom /var/lib/zerotier-one/planet || echo "No custom planet found"'
-ExecStartPre=/usr/bin/ss state time-wait sport = 9993 -K
+ExecStartPre=/usr/bin/ss state time-wait sport = {% if 'setting' in zerotier_localconfig and 'primaryPort' in zerotier_localconfig['setting'] %}{{zerotier_localconfig['setting']['primaryPort']}}{% else %}9993{% endif %} -K
