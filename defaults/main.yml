@@ -3,7 +3,11 @@ zerotier_repo:
   base_url_ubuntu: https://download.zerotier.com/debian/
 zerotier_version: 1.4.6
 zerotier_networks: {}
-zerotier_localconfig: {}
+zerotier_localconfig:
+  settings:
+    primaryPort: 9993
+    portMappingEnabled: true
+    allowTcpFallbackRelay: true
 zerotier_local_api_address: "localhost:9993"
 zerotier_planet: ""
 zerotier_ztnet_api_key: ""

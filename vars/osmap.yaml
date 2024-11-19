@@ -5,24 +5,28 @@ Ubuntu:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
   bionic:
     zerotier_repo: deb https://download.zerotier.com/debian/bionic bionic main
     packages:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
   jammy:
     zerotier_repo: deb https://download.zerotier.com/debian/jammy jammy main
     packages:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
   noble:
     zerotier_repo: deb https://download.zerotier.com/debian/noble noble main
     packages:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
 Debian:
   bullseye:
     zerotier_repo: deb https://download.zerotier.com/debian/bullseye bullseye main
@@ -30,12 +34,14 @@ Debian:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
   bookworm:
     zerotier_repo: deb https://download.zerotier.com/debian/bookworm bookworm main
     packages:
       - gpg
       - gnupg2
       - python3-psutil
+      - iproute2
 CentOS:
   "8":
     zerotier_repo: http://download.zerotier.com/redhat/el/8
