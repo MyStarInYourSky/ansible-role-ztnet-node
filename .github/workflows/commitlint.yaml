@@ -1,7 +1,7 @@
 name: CommitLint
 on:
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
 permissions:
   packages: read
   contents: read
