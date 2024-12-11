@@ -1,0 +1,28 @@
+name: Semantic Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  semantic-release:
+    runs-on: ubuntu-24.04
+    container:
+      image: ghcr.io/mystarinyoursky/releasetool:latest
+    env:
+      FORCE_COLOR: 1
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+    - name: Log in to the Container registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GH_TOKEN }}
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
+    - name: Copy over Semantic Release Config
+      run: cp /scripts/package.json package.json
+    - name: Generate Semantic Release
+      run: npx semantic-release
