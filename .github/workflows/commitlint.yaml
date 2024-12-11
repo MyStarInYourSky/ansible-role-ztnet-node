@@ -21,6 +21,8 @@ jobs:
       - name: Ignore Git Ownership
         if: github.event_name == 'pull_request'
         run: git config --global --add safe.directory '*'
+      - name: Copy over commitlint config
+        run: cp /docker/commitlint.config.j2 commitlint.config.j2
       - name: Validate PR commits with commitlint
         if: github.event_name == 'pull_request'
         run: npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} --verbose
