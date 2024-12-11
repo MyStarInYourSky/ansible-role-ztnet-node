@@ -3,7 +3,10 @@ name: Semantic Release
 on:
   push:
     branches: [ master ]
-
+permissions:
+  packages: read
+  contents: write
+  pull-requests: read
 jobs:
   semantic-release:
     runs-on: ubuntu-24.04
