@@ -1,0 +1,39 @@
+{
+    "name": "semantic-release",
+    "private": true,
+    "branches": [
+      "master",
+      {
+        "name": "production",
+        "prerelease": false
+      }
+    ],
+    "plugins": [
+      "@semantic-release/commit-analyzer",
+      "@semantic-release/release-notes-generator",
+      "@semantic-release/github",
+      [
+        "@semantic-release/exec",
+        {
+          "prepareCmd": "set-version ${nextRelease.version}",
+          "publishCmd": "publish-package",
+          "verifyReleaseCmd": "echo ${nextRelease.version} > RELEASED_VERSION",
+          "prepareCmd": "echo ${nextRelease.version} > RELEASED_VERSION"
+        }
+      ],
+      [
+        "@semantic-release/npm",
+        {
+          "npmPublish": false
+        }
+      ]
+    ],
+    "devDependencies": {
+      "@commitlint/cli": "^18.4.1",
+      "@commitlint/config-conventional": "^18.4.0",
+      "semantic-release": "^22.0.7"
+    },
+    "dependencies": {
+      "@semantic-release/exec": "*"
+    }
+  }
