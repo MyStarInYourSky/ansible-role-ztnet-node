@@ -18,5 +18,7 @@ jobs:
           fetch-depth: 0
       - name: Copy over Semantic Release Config
         run: cp /docker/package.json package.json
+      - name: Ignore Git Ownership
+        run: git config --global --add safe.directory '*'
       - name: Generate Semantic Release
         run: npx semantic-release
