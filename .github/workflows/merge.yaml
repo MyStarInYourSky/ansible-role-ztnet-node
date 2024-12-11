@@ -17,6 +17,6 @@ jobs:
         with:
           fetch-depth: ${{ github.event_name == 'pull_request' && 2 || 0 }}
       - name: Copy over Semantic Release Config
-        run: cp /scripts/package.json package.json
+        run: cp /docker/package.json package.json
       - name: Generate Semantic Release
         run: npx semantic-release
