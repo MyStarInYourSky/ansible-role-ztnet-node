@@ -12,7 +12,6 @@ zerotier_ztnet_api_key: ""
 zerotier_ztnet_api_base_url: ""
 zerotier_node_home: /var/lib/zerotier-one
 zerotier_node_enabled: true
-
 zerotier_root_home: /var/lib/zerotier-root
 zerotier_root_enabled: false
 zerotier_root_localconfig:

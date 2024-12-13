@@ -1,8 +1,8 @@
 [Service]
-{% if zerotier_planet != "" %}
+{% if zerotier_node_planet != "" %}
 ExecStartPre=/usr/bin/env cp /var/lib/zerotier-one/planet.custom /var/lib/zerotier-one/planet
 {% else %}
 ExecStartPre=/usr/bin/env rm -f /var/lib/zerotier-one/planet
 {% endif %}
 Environment="ZEROTIER_HOME={{ zerotier_node_home }}"
-ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_localconfig and 'primaryPort' in zerotier_localconfig['setting'] %}{{zerotier_localconfig['setting']['primaryPort']}}{% else %}9993{% endif %} -K
+ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_node_localconfig and 'primaryPort' in zerotier_node_localconfig['setting'] %}{{zerotier_node_localconfig['setting']['primaryPort']}}{% else %}9993{% endif %} -K
