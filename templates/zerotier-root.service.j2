@@ -7,7 +7,7 @@ Wants=network-online.target
 ExecStart=/usr/sbin/zerotier-one -p{{ zerotier_root_localconfig['settings']['primaryPort'] }}
 Restart=always
 KillMode=process
-{% if zerotier_controller_planet != "" %}
+{% if zerotier_root_planet != "" %}
 ExecStartPre=/usr/bin/env cp {{ zerotier_root_home }}/planet.custom {{ zerotier_root_home }}/planet
 {% else %}
 ExecStartPre=/usr/bin/env rm -f {{ zerotier_root_home }}/planet

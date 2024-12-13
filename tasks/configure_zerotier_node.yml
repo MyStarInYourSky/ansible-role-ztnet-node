@@ -2,7 +2,7 @@
 - name: Configure ZeroTier Node
   zerotier_node_config:
     networks: "{{ zerotier_node_networks }}"
-    local_api_url: "localhost:{{ zerotier_node_localconfig['settings']['primaryPort'] }}"
+    local_api_url: "http://localhost:{{ zerotier_node_localconfig['settings']['primaryPort'] }}"
 
 - name: Setup ZeroTier Node Planet
   ansible.builtin.copy:

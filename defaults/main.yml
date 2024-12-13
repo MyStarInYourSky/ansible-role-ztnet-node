@@ -19,3 +19,4 @@ zerotier_root_localconfig:
     primaryPort: 9994
     portMappingEnabled: true
     allowTcpFallbackRelay: false
+zerotier_root_planet: ""
