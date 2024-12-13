@@ -43,6 +43,15 @@
   notify:
     - Restart ZeroTier Root
 
+- name: Create ZeroTier Root Home
+  ansible.builtin.file:
+    path: "{{ zerotier_root_home }}"
+    state: directory
+    owner: zerotier-one
+    group: zerotier-one
+    mode: '0755'
+  when: zerotier_root_enabled
+
 - name: Enable ZeroTier Root
   ansible.builtin.systemd_service:
     name: zerotier-root

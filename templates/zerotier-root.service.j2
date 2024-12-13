@@ -8,7 +8,7 @@ ExecStart=/usr/sbin/zerotier-one -p{{ zerotier_root_localconfig['settings']['pri
 Restart=always
 KillMode=process
 {% if zerotier_root_planet != "" %}
-ExecStartPre=/usr/bin/env cp {{ zerotier_root_home }}/planet.custom {{ zerotier_root_home }}/planet
+ExecStartPre=/bin/sh -c '[ -f {{ zerotier_root_home }}/planet.custom ] && cp {{ zerotier_root_home }}/planet.custom {{ zerotier_root_home }}/planet || echo "No custom planet found"'
 {% else %}
 ExecStartPre=/usr/bin/env rm -f {{ zerotier_root_home }}/planet
 {% endif %}

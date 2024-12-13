@@ -1,6 +1,6 @@
 [Service]
 {% if zerotier_node_planet != "" %}
-ExecStartPre=/usr/bin/env cp /var/lib/zerotier-one/planet.custom /var/lib/zerotier-one/planet
+ExecStartPre=/bin/sh -c '[ -f {{ zerotier_node_home }}/planet.custom ] && cp {{ zerotier_node_home }}/planet.custom {{ zerotier_node_home }}/planet || echo "No custom planet found"'
 {% else %}
 ExecStartPre=/usr/bin/env rm -f /var/lib/zerotier-one/planet
 {% endif %}
