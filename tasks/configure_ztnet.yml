@@ -13,7 +13,7 @@
     api_url: "{{ zerotier_ztnet_api_base_url }}/api/v1"
     config: "{{
       {'authorized': true, 'name': inventory_hostname} |
-      ansible.builtin.combine(zerotier_networks[item]['ztnet_config'] |
+      ansible.builtin.combine(zerotier_node_networks[item]['ztnet_config'] |
       default({}), recursive=true)
     }}"
-  loop: "{{ zerotier_networks.keys() | list }}"
+  loop: "{{ zerotier_node_networks.keys() | list }}"
