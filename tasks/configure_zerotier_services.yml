@@ -1,0 +1,58 @@
+---
+- name: Setup ZeroTier Node Service Override folder
+  ansible.builtin.file:
+    path: /etc/systemd/system/zerotier-one.service.d/
+    state: directory
+    mode: '0755'
+    owner: root
+    group: root
+
+- name: Setup ZeroTier Node Service Override
+  ansible.builtin.template:
+    src: zerotier-node.service.j2
+    dest: /etc/systemd/system/zerotier-one.service.d/ansible.conf
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart ZeroTier Node
+
+- name: Enable ZeroTier Node
+  ansible.builtin.systemd_service:
+    name: zerotier-one
+    enabled: true
+    state: started
+    daemon_reload: true
+
+- name: Disable ZeroTier Node
+  ansible.builtin.systemd:
+    name: zerotier-one
+    state: stopped
+    enabled: false
+    daemon_reload: true
+
+- name: Setup ZeroTier Root Service
+  ansible.builtin.template:
+    src: zerotier-root.service.j2
+    dest: /lib/systemd/system/zerotier-root.service
+    owner: root
+    group: root
+    mode: "0644"
+  notify:
+    - Restart ZeroTier Root
+
+- name: Enable ZeroTier Root
+  ansible.builtin.systemd_service:
+    name: zerotier-root
+    enabled: true
+    state: started
+    daemon_reload: true
+  when: zerotier_root_enabled
+
+- name: Disable ZeroTier Root
+  ansible.builtin.systemd:
+    name: zerotier-root
+    state: stopped
+    enabled: false
+    daemon_reload: true
+  when: not zerotier_root_enabled

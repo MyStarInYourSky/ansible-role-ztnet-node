@@ -1,14 +1,22 @@
 zerotier_repo:
   gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
-  base_url_ubuntu: https://download.zerotier.com/debian/
 zerotier_version: 1.4.6
-zerotier_networks: {}
-zerotier_localconfig:
+zerotier_node_networks: {}
+zerotier_node_localconfig:
   settings:
     primaryPort: 9993
     portMappingEnabled: true
     allowTcpFallbackRelay: true
-zerotier_local_api_address: "localhost:9993"
-zerotier_planet: ""
+zerotier_node_planet: ""
 zerotier_ztnet_api_key: ""
 zerotier_ztnet_api_base_url: ""
+zerotier_node_home: /var/lib/zerotier-one
+zerotier_node_enabled: true
+
+zerotier_root_home: /var/lib/zerotier-root
+zerotier_root_enabled: false
+zerotier_root_localconfig:
+  settings:
+    primaryPort: 9994
+    portMappingEnabled: true
+    allowTcpFallbackRelay: false

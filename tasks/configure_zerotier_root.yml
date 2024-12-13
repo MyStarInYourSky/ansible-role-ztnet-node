@@ -1,0 +1,21 @@
+---
+- name: Setup ZeroTier Root Planet
+  ansible.builtin.copy:
+    dest: "{{ zerotier_root_home }}/planet.custom"
+    owner: zerotier-one
+    group: zerotier-one
+    mode: "0644"
+    content: "{{ zerotier_root_planet | b64decode }}"
+  when: zerotier_root_planet != ""
+  notify:
+    - Restart ZeroTier Root
+
+- name: Build ZeroTier Root local config
+  ansible.builtin.copy:
+    dest: "{{ zerotier_root_home }}/local.conf"
+    owner: zerotier-one
+    group: zerotier-one
+    mode: "0644"
+    content: "{{ zerotier_root_localconfig | to_nice_json }}"
+  notify:
+    - Restart ZeroTier Root

@@ -1,6 +1,7 @@
-Ubuntu:
+ubuntu:
   focal:
     zerotier_repo: deb https://download.zerotier.com/debian/focal focal main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
@@ -8,6 +9,7 @@ Ubuntu:
       - iproute2
   bionic:
     zerotier_repo: deb https://download.zerotier.com/debian/bionic bionic main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
@@ -15,6 +17,7 @@ Ubuntu:
       - iproute2
   jammy:
     zerotier_repo: deb https://download.zerotier.com/debian/jammy jammy main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
@@ -22,14 +25,16 @@ Ubuntu:
       - iproute2
   noble:
     zerotier_repo: deb https://download.zerotier.com/debian/noble noble main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
       - python3-psutil
       - iproute2
-Debian:
+debian:
   bullseye:
     zerotier_repo: deb https://download.zerotier.com/debian/bullseye bullseye main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
@@ -37,15 +42,14 @@ Debian:
       - iproute2
   bookworm:
     zerotier_repo: deb https://download.zerotier.com/debian/bookworm bookworm main
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages:
       - gpg
       - gnupg2
       - python3-psutil
       - iproute2
-CentOS:
+centos:
   "8":
     zerotier_repo: http://download.zerotier.com/redhat/el/8
-    packages: []
-  "7":
-    zerotier_repo: http://download.zerotier.com/redhat/el/7
+    zerotier_repo_gpg: https://raw.githubusercontent.com/zerotier/ZeroTierOne/master/doc/contact%40zerotier.com.gpg
     packages: []

@@ -1,2 +1,7 @@
-name: "ztnet-node"
-dependencies: []
+galaxy_info:
+  role_name: zerotier
+  namespace: mystarinyoursky
+  author: mystarinyoursky
+  description: ZeroTier Node and Root manager
+  license: AGPLv3
+  min_ansible_version: 2.9.0
