@@ -4,16 +4,16 @@ After=network-online.target network.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/sbin/zerotier-one -p{{ zerotier_controller_localconfig['settings']['primaryPort'] }}
+ExecStart=/usr/sbin/zerotier-one -p{{ zerotier_root_localconfig['settings']['primaryPort'] }}
 Restart=always
 KillMode=process
 {% if zerotier_controller_planet != "" %}
-ExecStartPre=/usr/bin/env cp {{ zerotier_controller_home }}/planet.custom {{ zerotier_controller_home }}/planet
+ExecStartPre=/usr/bin/env cp {{ zerotier_root_home }}/planet.custom {{ zerotier_root_home }}/planet
 {% else %}
-ExecStartPre=/usr/bin/env rm -f {{ zerotier_controller_home }}/planet
+ExecStartPre=/usr/bin/env rm -f {{ zerotier_root_home }}/planet
 {% endif %}
-Environment="ZEROTIER_HOME={{ zerotier_controller_home }}"
-ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_controller_localconfig and 'primaryPort' in zerotier_controller_localconfig['setting'] %}{{zerotier_controller_localconfig['setting']['primaryPort']}}{% else %}9994{% endif %} -K
+Environment="ZEROTIER_HOME={{ zerotier_root_home }}"
+ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_root_localconfig and 'primaryPort' in zerotier_root_localconfig['setting'] %}{{zerotier_root_localconfig['setting']['primaryPort']}}{% else %}9994{% endif %} -K
 
 
 [Install]
