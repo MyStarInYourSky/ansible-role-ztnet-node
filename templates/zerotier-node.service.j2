@@ -1,0 +1,8 @@
+[Service]
+{% if zerotier_node_planet != "" %}
+ExecStartPre=/bin/sh -c '[ -f {{ zerotier_node_home }}/planet.custom ] && cp {{ zerotier_node_home }}/planet.custom {{ zerotier_node_home }}/planet || echo "No custom planet found"'
+{% else %}
+ExecStartPre=/usr/bin/env rm -f /var/lib/zerotier-one/planet
+{% endif %}
+Environment="ZEROTIER_HOME={{ zerotier_node_home }}"
+ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_node_localconfig and 'primaryPort' in zerotier_node_localconfig['setting'] %}{{zerotier_node_localconfig['setting']['primaryPort']}}{% else %}9993{% endif %} -K

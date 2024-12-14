@@ -1,30 +1,38 @@
 ---
 - name: Include OS Specific mappings
-  include_vars:
+  ansible.builtin.include_vars:
     file: osmap.yaml
     name: osmap
 
 - name: Install ZeroTier (DEB)
-  include_tasks: install_deb.yml
+  ansible.builtin.include_tasks: install_deb.yml
   when: ansible_facts['os_family'] == 'Debian'
 
 - name: Install ZeroTier (RPM)
-  include_tasks: install_rpm.yml
+  ansible.builtin.include_tasks: install_rpm.yml
   when: ansible_facts['os_family'] == "RedHat"
 
 - name: Wait for ZeroTier to generate identity
-  wait_for:
+  ansible.builtin.wait_for:
     path: /var/lib/zerotier-one/identity.secret
 
-- name: Configure ZeroTier
-  include_tasks: configure_zerotier.yml
+- name: Configure ZeroTier Services
+  ansible.builtin.include_tasks: configure_zerotier_services.yml
+
+- name: Configure ZeroTier Node
+  ansible.builtin.include_tasks: configure_zerotier_node.yml
+  when: zerotier_node_enabled
+
+- name: Configure ZeroTier Root
+  ansible.builtin.include_tasks: configure_zerotier_root.yml
+  when: zerotier_root_enabled
 
 - name: Flush handlers
-  meta: flush_handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Wait for registration with ZTNET
   ansible.builtin.pause:
     minutes: 1
 
 - name: Configure ZTNET
-  include_tasks: configure_ztnet.yml
+  ansible.builtin.include_tasks: configure_ztnet.yml

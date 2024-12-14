@@ -1,7 +1,0 @@
-[Service]
-{% if zerotier_planet != "" %}
-ExecStartPre=/usr/bin/env cp /var/lib/zerotier-one/planet.custom /var/lib/zerotier-one/planet
-{% else %}
-ExecStartPre=/usr/bin/env rm -f /var/lib/zerotier-one/planet
-{% endif %}
-ExecStartPre=/usr/bin/env ss state time-wait sport = {% if 'setting' in zerotier_localconfig and 'primaryPort' in zerotier_localconfig['setting'] %}{{zerotier_localconfig['setting']['primaryPort']}}{% else %}9993{% endif %} -K
