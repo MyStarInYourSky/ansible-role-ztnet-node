@@ -32,7 +32,7 @@
 
 - name: Wait for registration with ZTNET
   ansible.builtin.pause:
-    minutes: 1
+    seconds: 30
 
 - name: Configure ZTNET
   ansible.builtin.include_tasks: configure_ztnet.yml
