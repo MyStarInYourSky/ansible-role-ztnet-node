@@ -7,7 +7,7 @@
     mode: "0644"
     content: "{{ zerotier_node_planet | b64decode }}"
   when: zerotier_node_planet != ""
-  register: zerotier_node_planet
+  register: zerotier_node_planet_status
 
 - name: Build ZeroTier Node local config
   ansible.builtin.copy:
@@ -16,13 +16,13 @@
     group: zerotier-one
     mode: "0644"
     content: "{{ zerotier_node_localconfig | to_nice_json }}"
-  register: zerotier_node_localconfig
+  register: zerotier_node_localconfig_status
 
 - name: Restart ZeroTier if Planet or Local Config are changed
   ansible.builtin.systemd_service:
     name: zerotier-one.service
     state: restarted
-  when: zerotier_node_planet.changed or zerotier_node_localconfig.changed
+  when: zerotier_node_planet_status.changed or zerotier_node_localconfig_status.changed
 
 - name: Configure ZeroTier Node
   zerotier_node_config:
