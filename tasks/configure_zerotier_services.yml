@@ -1,4 +1,7 @@
 ---
+- name: Get service facts
+  service_facts:
+  
 - name: Setup ZeroTier Node Service Override folder
   ansible.builtin.file:
     path: /etc/systemd/system/zerotier-one.service.d/
@@ -40,6 +43,7 @@
     owner: root
     group: root
     mode: "0644"
+  when: zerotier_root_enabled
   notify:
     - Restart ZeroTier Root
 
@@ -66,4 +70,4 @@
     state: stopped
     enabled: false
     daemon_reload: true
-  when: not zerotier_root_enabled
+  when: not zerotier_root_enabled and 'zerotier-root.service' in ansible_facts.services
