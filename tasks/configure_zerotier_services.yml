@@ -70,4 +70,4 @@
     state: stopped
     enabled: false
     daemon_reload: true
-  when: not zerotier_root_enabled and when 'zerotier-root.service' in ansible_facts.services
+  when: not zerotier_root_enabled and 'zerotier-root.service' in ansible_facts.services
