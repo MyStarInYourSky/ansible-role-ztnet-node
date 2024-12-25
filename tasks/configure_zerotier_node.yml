@@ -1,9 +1,4 @@
 ---
-- name: Configure ZeroTier Node
-  zerotier_node_config:
-    networks: "{{ zerotier_node_networks }}"
-    local_api_url: "http://localhost:{{ zerotier_node_localconfig['settings']['primaryPort'] }}"
-
 - name: Setup ZeroTier Node Planet
   ansible.builtin.copy:
     dest: "{{ zerotier_node_home }}/planet.custom"
@@ -12,8 +7,7 @@
     mode: "0644"
     content: "{{ zerotier_node_planet | b64decode }}"
   when: zerotier_node_planet != ""
-  notify:
-    - Restart ZeroTier Node
+  register: zerotier_node_planet
 
 - name: Build ZeroTier Node local config
   ansible.builtin.copy:
@@ -22,5 +16,15 @@
     group: zerotier-one
     mode: "0644"
     content: "{{ zerotier_node_localconfig | to_nice_json }}"
-  notify:
-    - Restart ZeroTier Node
+  register: zerotier_node_localconfig
+
+- name: Restart ZeroTier if Planet or Local Config are changed
+  ansible.builtin.systemd_service:
+    name: zerotier-one.service
+    state: restarted
+  when: zerotier_node_planet.changed or zerotier_node_localconfig.changed
+
+- name: Configure ZeroTier Node
+  zerotier_node_config:
+    networks: "{{ zerotier_node_networks }}"
+    local_api_url: "http://localhost:{{ zerotier_node_localconfig['settings']['primaryPort'] }}"
