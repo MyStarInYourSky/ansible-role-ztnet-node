@@ -34,18 +34,8 @@ jobs:
         with:
           fetch-depth: 0
       - name: Fix Permissions
-        run: git config --global --add safe.directory /__w/ansible-role-base/ansible-role-base
+        run: git config --global --add safe.directory /__w/ansible-role-ztnet-node/ansible-role-ztnet-node
       - name: Run CommitLint
         run: |
           echo -n "module.exports = {extends: ['@commitlint/config-conventional']}" > commitlint.config.js
-          npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }} | tee /tmp/comment || true
-      - name: Send result to GitHub PR
-        run: |
-          if [ -s /tmp/comment ]; then
-            echo '```' > /tmp/formattedcommit
-            cat /tmp/comment >> /tmp/formattedcommit
-            echo '```' >> /tmp/formattedcommit
-            gh pr comment ${PR_NUMBER} --repo "${REPO_NAME}" --body "$(cat /tmp/formattedcommit)"
-          else
-            echo "No need to send to Github PR"
-          fi
+          npx commitlint --from ${{ github.event.pull_request.base.sha }} --to ${{ github.event.pull_request.head.sha }}
