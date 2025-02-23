@@ -1,0 +1,41 @@
+name: semantic-release
+on:
+  push:
+    branches:
+      - master
+permissions:
+  actions: read
+  attestations: none
+  checks: read
+  contents: write
+  deployments: none
+  id-token: write
+  issues: write
+  discussions: read
+  packages: read
+  pages: none
+  pull-requests: write
+  repository-projects: none
+  security-events: none
+  statuses: none
+jobs:
+  semantic-release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+    container:
+      image: ghcr.io/starlightcraftedcloud/semanticrelease:latest
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PR_NUMBER: ${{ github.event.number }}
+        REPO_NAME: ${{ github.repository }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Fix Permissions
+        run: git config --global --add safe.directory /__w/ansible-role-ztnet-node/ansible-role-ztnet-node
+      - name: Run Semantic-Release
+        run: |
+          npx semantic-release
