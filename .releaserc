@@ -1,0 +1,16 @@
+{
+    "name": "semantic-release",
+    "private": true,
+    "branches": [
+        "master",
+        {
+            "name": "production",
+            "prerelease": false
+        }
+    ],
+    "plugins": [
+        "@semantic-release/commit-analyzer",
+        "@semantic-release/release-notes-generator",
+        "@semantic-release/github"
+    ]
+}
