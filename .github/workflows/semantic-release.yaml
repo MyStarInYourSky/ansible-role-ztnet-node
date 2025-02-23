@@ -20,12 +20,12 @@ permissions:
   statuses: none
 jobs:
   semantic-release:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     defaults:
       run:
         shell: bash
     container:
-      image: ghcr.io/starlightcraftedcloud/semanticrelease:latest
+      image: ghcr.io/mystarinyoursky/semanticrelease:latest
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         PR_NUMBER: ${{ github.event.number }}
