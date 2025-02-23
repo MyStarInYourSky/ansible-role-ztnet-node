@@ -35,6 +35,11 @@ options:
             - URL of the API
         type: dict
         required: true
+    organization:
+        description:
+            - Name of the Organization (if needed) where the network will be configured
+        type: str
+        required: true
 author:
 - MyStarInYourSky (@mystarinyoursky)
 '''
@@ -90,9 +95,14 @@ class ZTNetNodeConfig(object):
         self.module = module
         self.node = module.params['node']
         self.nwid = module.params['network']
-        self.api_url = module.params['api_url']
+        self.api_url = module.params['api_url'].rstrip('/')
         self.api_key = module.params['api_key']
         self.target_config = module.params['config']
+        self.organization = module.params['organization']
+
+        ## Configure organization path if organization set
+        if self.organization:
+            self.api_url = f'{self.api_url}/org/{self.organization}'
 
         # Set Defaults
         self.result = {}
@@ -153,6 +163,7 @@ def main():
             api_key=dict(type='str', required=True),
             config=dict(type='dict', required=True),
             api_url=dict(type='str', required=True),
+            organization=dict(type='str', required=True),
         ),
         supports_check_mode=True,
     )
