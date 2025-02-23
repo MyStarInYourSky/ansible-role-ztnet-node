@@ -7,7 +7,8 @@ Still a WIP
 ## Implemented
 - Joining ZeroTier Clients to networks
 - Configuration of local ZeroTier Client settings
-- Configuration of ZeroTier Client settings in ZTNET
+- Configuration of ZeroTier Client settings in ZTNET Personal Networks
+- Configuration of ZeroTier Client settings in ZTNET Organization Networks
 - Custom ZeroTier Planets
 
 ## Tested Operating Systems
